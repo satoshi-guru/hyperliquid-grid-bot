@@ -32,6 +32,10 @@ def create_config_from_env():
         "RAILWAY_ACCOUNT_ADDRESS", "RAILWAY_VAR_ACCOUNT_ADDRESS",
         "HYPERLIQUID_ADDRESS", "ADDRESS"
     ]
+
+    # Try different possible environment variable names for trading pair
+    possible_symbol_keys = ["symbol", "SYMBOL"]
+    possible_asset_index_keys = ["spot_asset_index", "SPOT_ASSET_INDEX"]
     
     # Find secret_key
     secret_key = None
@@ -48,6 +52,25 @@ def create_config_from_env():
             account_address = os.environ.get(key)
             logger.info(f"Found account address using variable: {key}")
             break
+
+    # Find symbol
+    symbol = "FEUSD/USDC"
+    for key in possible_symbol_keys:
+        if key in os.environ:
+            symbol = os.environ.get(key)
+            logger.info(f"Found symbol using variable: {key}")
+            break
+
+    # Find spot asset index
+    spot_asset_index = 153
+    for key in possible_asset_index_keys:
+        if key in os.environ:
+            try:
+                spot_asset_index = int(os.environ.get(key))
+                logger.info(f"Found spot asset index using variable: {key}")
+                break
+            except ValueError:
+                logger.error(f"Invalid spot asset index provided in {key}")
     
     if not secret_key:
         logger.error("No secret key found in environment variables")
@@ -55,7 +78,9 @@ def create_config_from_env():
     
     config = {
         "secret_key": secret_key,
-        "account_address": account_address
+        "account_address": account_address,
+        "symbol": symbol,
+        "spot_asset_index": spot_asset_index,
     }
     
     with open("config.json", "w") as f:

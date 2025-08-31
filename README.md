@@ -1,6 +1,6 @@
 # Hyperliquid Grid Trading Bot
 
-This bot implements a grid trading strategy for the FEUSD/USDC trading pair on Hyperliquid DEX. It automatically places buy and sell orders according to a predefined grid, creating a network of orders that can profit from price oscillations within a range.
+This bot implements a grid trading strategy for a configurable trading pair on Hyperliquid DEX. By default it targets the FEUSD/USDC pair. It automatically places buy and sell orders according to a predefined grid, creating a network of orders that can profit from price oscillations within a range.
 
 ## Grid Trading Strategy
 
@@ -12,7 +12,16 @@ The bot follows these rules:
 
 ## Configuration
 
-All configuration parameters can be easily modified in the `grid_trader.py` file:
+All configuration parameters can be easily modified in the `grid_trader.py` file. The trading pair can also be set in `config.json`:
+
+```json
+{
+  "secret_key": "YOUR_HYPERLIQUID_PRIVATE_KEY_HERE",
+  "account_address": "YOUR_HYPERLIQUID_ADDRESS_HERE (optional)",
+  "symbol": "FEUSD/USDC",
+  "spot_asset_index": 153
+}
+```
 
 ```python
 # Grid Trading Configuration
@@ -28,7 +37,7 @@ self.SPOT_ASSET_INDEX = 153       # Spot asset index on Hyperliquid
 
 ### Spot Asset Configuration
 
-The bot is currently configured for FEUSD/USDC (spot asset index 153), but can be adapted to trade any spot pair on Hyperliquid by changing the `SYMBOL` and `SPOT_ASSET_INDEX` values. You can find the asset index for other trading pairs in the Hyperliquid documentation or API.
+The bot is by default configured for FEUSD/USDC (spot asset index 153), but can be adapted to trade any spot pair on Hyperliquid by changing the `symbol` and `spot_asset_index` values in the configuration. You can find the asset index for other trading pairs in the Hyperliquid documentation or API.
 
 This creates a grid with 40 levels between 0.99 and 1.0, with each grid step being approximately 0.00025. The increased number of grid levels and tighter grid spacing allows for more frequent trading opportunities.
 

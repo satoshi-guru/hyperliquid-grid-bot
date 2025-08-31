@@ -48,12 +48,16 @@ class GridTrader:
         # Trading pair configuration
         self.SYMBOL = "FEUSD/USDC"
         self.SPOT_ASSET_INDEX = 153
-        
+
         # Calculate grid step size
         self.GRID_STEP = (self.GRID_UPPER_BOUNDARY - self.GRID_LOWER_BOUNDARY) / self.GRID_LEVELS
-        
+
         # Load configuration
         self.config = self._load_config(config_path)
+
+        # Override trading pair configuration from config if provided
+        self.SYMBOL = self.config.get("symbol", self.SYMBOL)
+        self.SPOT_ASSET_INDEX = self.config.get("spot_asset_index", self.SPOT_ASSET_INDEX)
         
         # Create Ethereum account from private key
         try:
