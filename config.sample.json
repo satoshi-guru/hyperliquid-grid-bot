@@ -1,4 +1,6 @@
 {
     "secret_key": "YOUR_HYPERLIQUID_PRIVATE_KEY_HERE",
-    "account_address": "YOUR_HYPERLIQUID_ADDRESS_HERE (optional)"
+    "account_address": "YOUR_HYPERLIQUID_ADDRESS_HERE (optional)",
+    "symbol": "FEUSD/USDC",
+    "spot_asset_index": 153
 }
